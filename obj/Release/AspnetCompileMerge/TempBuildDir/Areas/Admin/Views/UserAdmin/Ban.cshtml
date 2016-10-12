@@ -1,0 +1,21 @@
+﻿<h2>Ban</h2>
+@using (Html.BeginForm("Ban", "UserAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-group">
+        <label class="col-md-2 control-label">Username</label>
+        <div class="col-md-10">
+            <input type="text" name="Username" placeholder="Eter username" class="form-control"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Why</label>
+        <div class="col-md-10">
+            <input type="text" name="Why" placeholder="Because..." class="form-control"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10"> 
+            <input type="submit" class="btn btn-default" value="Ban!" />
+        </div>
+    </div>
+}

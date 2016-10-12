@@ -1,0 +1,24 @@
+﻿@model Phosto.Models.ImageModel
+
+<div>
+    <h4>@Model.Name</h4>
+    <hr />
+    <img src="@Url.Action("GetImage", "GetImage", new { path = Model.Path })" alt="Sorry, something is wrong :(" style="float: none;width:25%" />
+    <hr />
+    <p><i>Uploaded by: @Model.Author</i></p>
+    <h6><i>@Model.Description</i></h6>
+    <div style="float:right;display:block">@Html.Partial("_Rating", Model.id)</div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div style="float:none;display:block">@Html.Partial("_Comments", Model.id)</div>
+    <div>
+        @Html.ActionLink("Back to list", "Index", "Home")
+    </div>
+
+
+</div>

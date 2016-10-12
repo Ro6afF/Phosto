@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Phosto.Models.CommentModel>
+@using Phosto.Models;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<style>
+    .kofa:hover {
+        -ms-filter: invert(100%);
+        -webkit-filter: invert(100%);
+        filter: invert(100%);
+    }
+</style>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Content)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                <a href="/Admin/CommentsAdmin/DeleteAdmin/@item.id" class=" glyphicon glyphicon-trash kofa" aria-hidden="true"></a>
+            </td>
+        </tr>
+    }
+
+</table>

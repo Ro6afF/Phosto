@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Phosto.Models.ImageModel>
+
+<h1>Phosto</h1>
+@if (Request.IsAuthenticated)
+{
+    <p>
+        @Html.ActionLink("Create New", "Create", "Home")
+    </p>
+}
+<div class="panel panel-default">
+    <div class="panel-body" style="text-align:center">
+        <a style="text-decoration:none">Filter by:</a>
+        <select class="form-control" style="display:inline" id="filter">
+            <option value="1">Name</option>
+            <option value="2">Author</option>
+        </select>
+        <input type="text" id="filter_txt" placeholder="Filter by..." class="form-control" style="display:inline" />
+        <button class="btn btn-default" style="display:inline" onclick="sendFilterRequest()">Filter!</button>
+    </div>
+</div>
+<script>
+    function sendFilterRequest() {
+        var e = document.getElementById("filter");
+        var e2 = document.getElementById("filter_txt");
+        var url = window.location;
+        var loc = url.toLocaleString().split("?");
+        if (loc[1] != undefined)
+            loc.pop();
+        window.location = loc[0] + "?type=" + e.options[e.selectedIndex].value + "&name=" + e2.value;
+    }
+</script>
+<table class="table table-responsive table-bordered table-striped table-hover">
+    <tbody>
+        <tr>
+            <th>Title</th>
+            <th>Photo</th>
+            <th>Rating</th>
+        </tr>
+        <style>
+            .delete:hover {
+                -ms-filter: invert(100%);
+                -webkit-filter: invert(100%);
+                filter: invert(100%);
+            }
+        </style>
+
+        @foreach (var item in Model)
+        {
+            <tr onclick="location.href = '/Ratings/Look?id=@item.id'">
+                <td>
+                    <h3>@item.Name</h3>
+                </td>
+                @{
+                }
+                <td>
+                    <img class="img-responsive" src="@Url.Action("GetImage", "GetImage", new { path = item.Path })" alt="Sorry, something is wrong :(" style="max-width: 41.66%;max-height:41.66%;" />
+                </td>
+                <td>
+                    <div style="float:left">
+                        @Html.Partial("_Rating", item.id)
+                    </div>
+                    @if (User.IsInRole("Admin") || item.Author == User.Identity.Name)
+                    {
+                        <a class="glyphicon glyphicon-trash delete" style="float:right" aria-hidden="true" href="/Admin/ImageAdmin/Delete/@item.id"></a>
+                    }
+                </td>
+            </tr>
+                    }
+    </tbody>
+</table>

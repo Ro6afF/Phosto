@@ -1,0 +1,30 @@
+﻿@model int
+@{
+    Phosto.Models.ApplicationDbContext db = new Phosto.Models.ApplicationDbContext();
+    Phosto.Models.RatingModel Ratingo = db.Ratings.FirstOrDefault(r => r.id == Model);
+}
+@if (Request.IsAuthenticated)
+{
+    <style>
+        .text-success:hover {
+            text-decoration: underline;
+        }
+
+        .text-danger:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <h5 style="display:inline-block" >Views: @Ratingo.Views</h5>
+    <br />
+    <h5 class="text-success" style="display:inline-block" onclick="location.href = '/Ratings/Like?id=@Model'">Likes: @Ratingo.Likes</h5>
+    <br />
+    <h5 class="text-danger" style="display:inline-block" onclick="location.href = '/Ratings/Hate?id=@Model'">Hates: @Ratingo.Hates</h5>
+}
+else
+{
+    <h5 style="display:inline-block">Views: @Ratingo.Views</h5>
+    <br />
+    <h5 class="text-success" style="display:inline-block">Likes: @Ratingo.Likes</h5>
+    <br />
+    <h5 class="text-danger" style="display:inline-block">Hates: @Ratingo.Hates</h5>
+}

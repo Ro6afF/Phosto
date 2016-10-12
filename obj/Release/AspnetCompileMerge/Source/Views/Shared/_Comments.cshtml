@@ -1,0 +1,50 @@
+﻿@model int
+@{
+    Phosto.Models.ApplicationDbContext db = new Phosto.Models.ApplicationDbContext();
+    var comments = db.Comments.Where(x => x.Commented == Model).ToList();
+    <div class="jumbotron">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span style="float:left">Write a comment</span>
+                </h3>
+            </div>
+            @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("Create", "Comments", FormMethod.Post, new { style = "min-width:100% ", @class = "panel-body" }))
+                {
+                    <textarea class="form-control" name="Content"></textarea>
+                    <input type="number" name="Commented" value="@Model" style="display:none" />
+                    <input class="form-control" type="submit" value="Save" />
+                }
+            }
+            else
+            {
+                <div class="panel-body text-warning ">Log in or Register to be able to write comments</div>
+            }
+        </div>
+        <style>
+            .delete:hover {
+                -ms-filter: invert(100%);
+                -webkit-filter: invert(100%);
+                filter: invert(100%);
+            }
+        </style>
+        @foreach (var item in comments)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@item.Author @if (User.IsInRole("Admin") || item.Author==User.Identity.Name)
+                    {
+                        <a class="glyphicon glyphicon-trash delete" style="float:right" aria-hidden="true" href="/Admin/CommentsAdmin/Delete/@item.id"></a>
+                    }</h3>
+                </div>
+                <div class="panel-body">
+                    @item.Content
+                </div>
+            </div>
+        }
+    </div>
+}
+
+
